@@ -1,0 +1,21 @@
+<div>
+  <h2>Optimal Charging Windows Calculator</h2>
+    <div>
+        <div *ngIf="errorMessage">
+            {{ errorMessage }}
+        </div>
+
+        <label for="hours">Number of hours to charge:</label>
+        <input type="number" [(ngModel)]="numberOfHours" min="1" max="6" />
+        <button (click)="calculateOptimalWindow()" [disabled]="isLoading">
+            {{ isLoading ? 'Calculating...' : 'Calculate' }}
+        </button>
+    </div>
+
+    <div *ngIf="result">
+        <h3>Optimal Charging Window:</h3>
+        <p>Start Time: {{ result.startDateTime }}</p>
+        <p>End Time: {{ result.endDateTime }}</p>
+        <p>Average Clean Energy Percentage: {{ result.percentage }}%</p>
+    </div>
+</div>

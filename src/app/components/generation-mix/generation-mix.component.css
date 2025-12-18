@@ -1,0 +1,36 @@
+.mix-container {
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.charts-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.chart-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.clean-energy-info {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  padding: 8px;
+  border-radius: 4px;
+  margin: 10px 0;
+}
+
+.refresh-btn{
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  padding: 12px 16px;
+  border-radius: 8px;
+}

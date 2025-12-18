@@ -4,7 +4,7 @@
   </div>
 
   <div *ngIf="mix$ | async as mixDays; else loading">
-    
+    <button (click)="loadGenerationMix()">Refresh Generation Mix Data</button>
     <div *ngFor="let day of mixDays">
       <h3>Date: {{ day.date }}</h3>
       <p><strong>Clean energy:</strong> {{ day.cleanEnergyPercentage }}%</p>

@@ -11,13 +11,23 @@ import { catchError, Observable, of } from 'rxjs';
   styleUrl: './generation-mix.component.css'
 })
 export class GenerationMixComponent {
-  errorMessage: string | null = null;
   private energyService = inject(EnergyService);
+  
+  errorMessage: string | null = null;
+  mix$: Observable<DailyMixDTO[]> = of([]);
 
-  mix$ = this.energyService.getGenerationMix().pipe(
+
+  ngOnInit() {
+    this.loadGenerationMix();
+  }
+
+  loadGenerationMix() {
+    this.errorMessage = null;
+    this.mix$ = this.energyService.getGenerationMix().pipe(
       catchError(error => {
         this.errorMessage = error?.message ?? "An error occurred while fetching the generation mix data.";
         return of([] as DailyMixDTO[]);
       })
     );
+  }
 }

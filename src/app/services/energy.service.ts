@@ -17,7 +17,7 @@ export class EnergyService {
     return this.http.get<DailyMixDTO[]>(`${this.apiUrl}/mix`);
   }
 
-  calculateOptimalChargingWindows(numberOfHours: number): Observable<OptimalWindowDTO> {
+  calculateOptimalChargingWindow(numberOfHours: number): Observable<OptimalWindowDTO> {
     const request: ChargingRequest = { numberOfHours };
     return this.http.post<OptimalWindowDTO>(`${this.apiUrl}/optimal-charging`, request);
   }

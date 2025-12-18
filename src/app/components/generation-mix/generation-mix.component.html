@@ -1,0 +1,23 @@
+<div>
+  <div *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="mix$ | async as mixDays; else loading">
+    
+    <div *ngFor="let day of mixDays">
+      <h3>Date: {{ day.date }}</h3>
+      <p><strong>Clean energy:</strong> {{ day.cleanEnergyPercentage }}%</p>
+      
+      <ul>
+        <li *ngFor="let fuel of day.metrics">
+          {{ fuel.fuelType }}: {{ fuel.percentage }}%
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <ng-template #loading>
+    <p>Loading data from API...</p>
+  </ng-template>
+</div>

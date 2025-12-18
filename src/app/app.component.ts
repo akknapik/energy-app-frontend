@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { GenerationMixComponent } from './components/generation-mix/generation-mix.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [GenerationMixComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

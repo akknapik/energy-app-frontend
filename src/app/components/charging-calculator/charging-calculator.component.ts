@@ -3,6 +3,7 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { OptimalWindowDTO } from '../../models/optimal-window.dto';
 import { EnergyService } from '../../services/energy.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-charging-calculator',
@@ -33,8 +34,14 @@ export class ChargingCalculatorComponent {
         this.result = data;
         this.isLoading = false;
       },
-      error: (error) => {
-        this.errorMessage = error?.message ?? "An error occurred while calculating optimal charging windows.";
+      error: (error: HttpErrorResponse) => {
+        if(error.status === 400) {
+          this.errorMessage = "Invalid input. Please ensure the number of hours is between 1 and 6.";
+        } else if(error.status === 500) {
+          this.errorMessage = "Server error occurred. Please try again later.";
+        } else {
+          this.errorMessage = "Unexpected error occurred. Please try again.";
+        }
         this.isLoading = false;
       }
     });

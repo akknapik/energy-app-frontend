@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartData, ChartOptions } from 'chart.js';
 import { catchError, Observable, of } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-generation-mix',
@@ -23,6 +24,9 @@ export class GenerationMixComponent {
     responsive: true,
     plugins: {
       legend: {
+        labels: {
+          boxWidth: 12,
+        },
         position: 'bottom',
       },
     }
@@ -40,13 +44,17 @@ export class GenerationMixComponent {
 
   loadGenerationMix() {
     this.errorMessage = null;
-    
+
     this.mix$ = this.energyService.getGenerationMix().pipe(
-      catchError(error => {
-        this.errorMessage = error?.message ?? "An error occurred while fetching the generation mix data.";
+      catchError((error: HttpErrorResponse) => {
+        if(error.status === 500) {
+          this.errorMessage = "Server error occurred while fetching generation mix. Please try again later.";
+        } else {
+          this.errorMessage = "Unexpected error occurred while fetching generation mix. Please try again.";
+        }
         return of([] as DailyMixDTO[]);
       })
-    );
+    );  
   }
 
   getChartData(day: string, metrics: any[]): ChartData<'pie'> {

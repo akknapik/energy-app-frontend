@@ -1,21 +1,43 @@
-<div>
-  <h2>Optimal Charging Windows Calculator</h2>
-    <div>
-        <div *ngIf="errorMessage">
-            {{ errorMessage }}
-        </div>
+<div class="calculator-container">
+  
+  <div class="container-header">
+    <h3>Optimal Charging Calculator</h3>
+  </div>
 
-        <label for="hours">Number of hours to charge:</label>
-        <input type="number" [(ngModel)]="numberOfHours" min="1" max="6" />
-        <button (click)="calculateOptimalWindow()" [disabled]="isLoading">
-            {{ isLoading ? 'Calculating...' : 'Calculate' }}
-        </button>
+  <div class="container-body">
+    <label for="hoursInput">How many hours do you need to charge?</label>
+    
+    <div class="input-group">
+      <input id="hoursInput" type="number" [(ngModel)]="numberOfHours" min="1" max="6" placeholder="1">
+      <span class="unit">hours</span>
     </div>
 
-    <div *ngIf="result">
-        <h3>Optimal Charging Window:</h3>
-        <p>Start Time: {{ result.startDateTime }}</p>
-        <p>End Time: {{ result.endDateTime }}</p>
-        <p>Average Clean Energy Percentage: {{ result.percentage }}%</p>
+    <button class="eco-btn" (click)="calculateOptimalWindow()" [disabled]="isLoading">
+      <span *ngIf="!isLoading">Find Best Time</span>
+      <span *ngIf="isLoading">Calculating...</span>
+    </button>
+    
+    <div *ngIf="errorMessage" class="status-box error-box">
+        <h3>An error occurred</h3>
+        <p>{{ errorMessage }}</p>
     </div>
+
+    <div class="result-box" *ngIf="result && !isLoading && !errorMessage">
+        <div class="result-header">Optimal window found!</div>
+    
+    <div class="result-content">
+      <div class="result-row">
+        <span class="label">Start:</span>
+        <span class="value">{{ result.startDateTime | date:'EEEE, HH:mm' }}</span>
+      </div>
+      <div class="result-row">
+        <span class="label">End:</span>
+        <span class="value">{{ result.endDateTime | date:'EEEE, HH:mm' }}</span>
+      </div>
+      
+      <div class="eco-badge">
+        {{ result.percentage }}% Clean Energy
+      </div>
+    </div>
+  </div>
 </div>

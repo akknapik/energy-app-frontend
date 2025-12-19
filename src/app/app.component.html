@@ -1,5 +1,26 @@
-<main>
-  <h1>Energy App</h1>
-  <app-generation-mix></app-generation-mix>
-  <app-charging-calculator></app-charging-calculator>
-</main>
+<div class="app-container">
+  
+  <header class="main-header">
+    <h1>UK Energy Dashboard</h1>
+    <p>Monitor your generation mix and charge optimally.</p>
+    <div class="divider"></div>
+  </header>
+
+  <main>
+    <section class="charts-section">
+      <h2>Current and forecasted generation mix</h2>
+      <app-generation-mix></app-generation-mix>
+    </section>
+    
+    <div class="divider"></div>
+    
+    <section class="calculator-section">
+      <app-charging-calculator></app-charging-calculator>
+    </section>
+  </main>
+
+  <footer class="main-footer">
+    <p>© 2025 Energy App | Data provided by NESO</p>
+  </footer>
+
+</div>

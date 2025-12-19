@@ -1,0 +1,107 @@
+.calculator-container {
+  background: white;
+  width: 100%;
+  max-width: 450px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+
+.container-header {
+  background: #2c3e50;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.container-header h3 {
+  margin: 0;
+  font-weight: 500;
+}
+
+.container-body { 
+  padding: 30px; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+}
+
+label {     
+  font-weight: 600; 
+  color: #34495e; 
+  margin-bottom: 10px; 
+  align-self: flex-start;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ecf0f1;
+}
+
+.input-group input {
+  border: none;
+  font-size: 2rem;
+  width: 60px;
+  text-align: center;
+  color: #2c3e50;
+  outline: none;
+}
+
+.unit { 
+  font-size: 1.2rem; 
+  color: #bdc3c7; 
+  margin-left: 5px; 
+}
+
+.result-box {
+  padding: 20px;
+  border-top: 1px solid #d1f2eb;
+  animation: slideDown 0.4s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.result-header {
+  color: #16a085;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.result-content { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 10px; 
+}
+
+.result-row { 
+  display: flex; 
+  justify-content: space-between; 
+  border-bottom: 1px solid rgba(0,0,0,0.05); 
+  padding-bottom: 5px; 
+}
+
+.label { 
+  color: #7f8c8d; 
+}
+
+.value { 
+  font-weight: 600; 
+  color: #2c3e50; 
+}
+
+.eco-badge {
+  margin-top: 10px;
+  background-color: #2ecc71;
+  color: white;
+  text-align: center;
+  padding: 8px;
+  border-radius: 8px;
+  font-weight: bold;
+}

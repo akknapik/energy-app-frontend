@@ -6,6 +6,7 @@ import { BaseChartDirective } from 'ng2-charts';
 import { ChartData, ChartOptions } from 'chart.js';
 import { catchError, Observable, of } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorResponse } from '../../models/error.response';
 
 @Component({
   selector: 'app-generation-mix',
@@ -47,10 +48,11 @@ export class GenerationMixComponent {
 
     this.mix$ = this.energyService.getGenerationMix().pipe(
       catchError((error: HttpErrorResponse) => {
-        if(error.status === 500) {
-          this.errorMessage = "Server error occurred while fetching generation mix. Please try again later.";
+        const backendError = error.error as ErrorResponse;
+        if(backendError && backendError.message) {
+          this.errorMessage = backendError.message;
         } else {
-          this.errorMessage = "Unexpected error occurred while fetching generation mix. Please try again.";
+          this.errorMessage = "Unexpected error occurred while fetching generation mix. Please try again later.";
         }
         return of([] as DailyMixDTO[]);
       })

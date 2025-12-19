@@ -9,7 +9,7 @@ import { ChargingRequest } from '../models/charging.request';
   providedIn: 'root'
 })
 export class EnergyService {
-  private apiUrl = '/api/energy';
+  private apiUrl = '/api/v1/energy';
 
   constructor(private http: HttpClient) { }
 

@@ -13,7 +13,7 @@
     </div>
 
     <button class="eco-btn" (click)="calculateOptimalWindow()" [disabled]="isLoading">
-      <span *ngIf="!isLoading">Find Best Time</span>
+      <span *ngIf="!isLoading">Find best time</span>
       <span *ngIf="isLoading">Calculating...</span>
     </button>
     
@@ -23,20 +23,23 @@
     </div>
 
     <div class="result-box" *ngIf="result && !isLoading && !errorMessage">
-        <div class="result-header">Optimal window found!</div>
+      <div class="result-header">
+        Optimal window found!
+      </div>
     
-    <div class="result-content">
-      <div class="result-row">
-        <span class="label">Start:</span>
-        <span class="value">{{ result.startDateTime | date:'EEEE, HH:mm' }}</span>
-      </div>
-      <div class="result-row">
-        <span class="label">End:</span>
-        <span class="value">{{ result.endDateTime | date:'EEEE, HH:mm' }}</span>
-      </div>
-      
-      <div class="eco-badge">
-        {{ result.percentage }}% Clean Energy
+      <div class="result-content">
+        <div class="result-row">
+          <span class="label">Start:</span>
+          <span class="value">{{ result.startDateTime | date:'EEEE, HH:mm' }}</span>
+        </div>
+        <div class="result-row">
+          <span class="label">End:</span>
+          <span class="value">{{ result.endDateTime | date:'EEEE, HH:mm' }}</span>
+        </div>
+        
+        <div class="eco-badge">
+          {{ result.percentage }}% Clean Energy
+        </div>
       </div>
     </div>
   </div>

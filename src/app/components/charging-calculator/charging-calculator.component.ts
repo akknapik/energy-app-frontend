@@ -15,7 +15,7 @@ import { ErrorResponse } from '../../models/error.response';
 export class ChargingCalculatorComponent {
   private energyService = inject(EnergyService);
 
-  numberOfHours: number = 1
+  numberOfHours: number = 1;
   result: OptimalWindowDTO | null = null;
   errorMessage: string | null = null;
   isLoading: boolean = false;

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { EnergyService } from '../../services/energy.service';
 import { DailyMixDTO } from '../../models/daily-mix.dto';
 import { CommonModule } from '@angular/common';
@@ -7,6 +7,7 @@ import { ChartData, ChartOptions } from 'chart.js';
 import { catchError, Observable, of } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorResponse } from '../../models/error.response';
+import { FuelDTO } from '../../models/fuel.dto';
 
 @Component({
   selector: 'app-generation-mix',
@@ -14,7 +15,7 @@ import { ErrorResponse } from '../../models/error.response';
   templateUrl: './generation-mix.component.html',
   styleUrl: './generation-mix.component.css'
 })
-export class GenerationMixComponent {
+export class GenerationMixComponent implements OnInit {
   private energyService = inject(EnergyService);
   
   errorMessage: string | null = null;
@@ -67,7 +68,7 @@ export class GenerationMixComponent {
     );  
   }
 
-  getChartData(day: string, metrics: any[]): ChartData<'pie'> {
+  getChartData(day: string, metrics: FuelDTO[]): ChartData<'pie'> {
     const cached = this.chartCache.get(day);
 
     if(cached) {

@@ -24,6 +24,14 @@ export class GenerationMixComponent {
   chartOptions: ChartOptions<'pie'> = {
     responsive: true,
     plugins: {
+      tooltip: {
+        callbacks: {
+          label: (num) => {
+            const value = num.parsed;
+            return `${value}%`;
+          }
+        }
+      },
       legend: {
         labels: {
           boxWidth: 12,
@@ -67,7 +75,7 @@ export class GenerationMixComponent {
     }
 
     const data : ChartData<'pie'> = {
-      labels: metrics.map(m => m.fuelType),
+      labels: metrics.map(m => m.fuelType.toUpperCase()),
       datasets: [{
         data: metrics.map(m => m.percentage),
         backgroundColor: metrics.map(m => this.colors[m.fuelType] || '#bdc3c7'),

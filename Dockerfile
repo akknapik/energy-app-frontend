@@ -9,3 +9,5 @@ FROM nginx:alpine
 COPY --from=build /app/dist/energy-app-frontend/browser /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
+
+CMD ["/bin/sh", "-c", "sleep 10 && nginx -g 'daemon off;'"]

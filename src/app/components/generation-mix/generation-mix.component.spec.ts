@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GenerationMixComponent } from './generation-mix.component';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 describe('GenerationMixComponent', () => {
   let component: GenerationMixComponent;
@@ -8,7 +10,11 @@ describe('GenerationMixComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GenerationMixComponent]
+      imports: [GenerationMixComponent],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     })
     .compileComponents();
 
@@ -19,5 +25,15 @@ describe('GenerationMixComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should have null errorMessage initially', () => {
+    expect(component.errorMessage).toBeNull();
+  });
+
+  it('should call loadGenerationMix on init', () => {
+    spyOn(component, 'loadGenerationMix');
+    component.ngOnInit();
+    expect(component.loadGenerationMix).toHaveBeenCalled();
   });
 });

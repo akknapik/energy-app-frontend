@@ -1,59 +1,97 @@
-# EnergyAppFrontend
+# Energy App - Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.5.
+Frontend for the Energy App built with Angular. It uses Nginx to serve static files and acts as a Reverse Proxy for secure communication with the backend.
 
-## Development server
+## 🛠 Tech Stack
+* **Framework:** Angular (v17+)
+* **Web Server / Proxy:** Nginx (Alpine Linux)
+* **Containerization:** Docker
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
+## ⚙️ Nginx Configuration (`nginx.conf`)
+
+This project uses `nginx.conf` to handle API routing. **You need to swap the configuration content depending on whether you are running locally or deploying to Render.**
+
+### 1. Configuration for LOCAL DOCKER (Default)
+Use this configuration when running the app on your computer. It connects to the backend running on your host machine via `host.docker.internal`.
+
+```nginx
+server {
+    listen 80;
+    server_name localhost;
+    root /usr/share/nginx/html;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    location /api/ {
+        proxy_pass http://host.docker.internal:8080;
+        
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### 2. Configuration for RENDER.COM (Production)
+Before deploying, replace the content of `nginx.conf` with the following block. This configuration proxies requests to the public HTTPS address of the backend.
 
-## Code scaffolding
+```nginx
+server {
+    listen 80;
+    server_name localhost;
+    root /usr/share/nginx/html;
+    index index.html;
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
 
-```bash
-ng generate component component-name
+    location /api/ {
+        proxy_pass https://energy-app-backend-xyz.onrender.com;
+
+        proxy_ssl_server_name on;
+        proxy_ssl_name energy-app-backend-qrf0.onrender.com;
+
+        proxy_set_header Host energy-app-backend-xyz.onrender.com;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## 🚀 Local Execution (Docker)
 
-## Building
+1.  **Check Config:** Ensure your `nginx.conf` contains the **LOCAL DOCKER** configuration (Option 1 above).
 
-To build the project run:
+2.  **Build the image:**
+    ```bash
+    docker build -t energy-app-frontend .
+    ```
 
-```bash
-ng build
-```
+3.  **Run the container:**
+    ```bash
+    docker run -p 80:80 energy-app-frontend
+    ```
+    The app will be available at: `http://localhost/`
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
+## 🌍 Deployment (Render.com)
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+1.  **Update `nginx.conf`:**
+    Overwrite your `nginx.conf` with the **RENDER.COM** configuration (Option 2 above).
+    * Commit and push changes to GitHub.
 
-```bash
-ng test
-```
+2.  **Create Web Service:**
+    Create a new Web Service on Render with **Docker** runtime.
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+3.  **Critical Setting (DNS Fix):**
+    The `Dockerfile` contains a `sleep 30` command to ensure the network is ready before Nginx starts.
